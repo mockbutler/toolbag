@@ -1,0 +1,7 @@
+typeset -U path
+path=(~/bin $path)
+
+export EDITOR=vim
+export VISUAL=$EDITOR
+export CMAKE_EXPORT_COMPILE_COMMANDS=ON
+

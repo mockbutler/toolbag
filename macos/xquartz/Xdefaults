@@ -1,0 +1,17 @@
+xterm*selectToClipboard: true
+xterm*visualBell: true
+xterm*termName: xterm-color
+xterm*foreground: rgb:d8/d8/d8
+xterm*background: rgb:00/00/00
+
+XTerm*renderFont: true
+XTerm*faceName: Hack
+XTerm*faceSize: 11
+
+URxvt*font:		xft:Hack:size=11
+URxvt*perl-ext-common:	selection-to-clipboard,tabbed
+URxvt*foreground:	rgb:d8/d8/d8
+URxvt*background:	rgb:00/00/00
+URxvt*termName:		xterm-color
+URxvt*saveLines:	32767
+URxvt*scrollBar_right:	true

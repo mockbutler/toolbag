@@ -1,0 +1,28 @@
+# Dir stack
+alias d='dirs -v'
+alias pd=pushd
+alias pd1='pushd +1'
+alias pd2='pushd +2'
+alias xd=popd
+alias xd1='popd +1'
+alias xd2='popd +2'
+
+alias l='\ls -hF'
+alias la='\ls -AhF'
+alias ll='\ls -hFl'
+alias lla='\ls -AhFl'
+
+alias h='history'
+
+setopt HIST_IGNORE_ALL_DUPS
+
+autoload -Uz compinit && compinit
+
+alias g=git
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	alias nproc='sysctl -n hw.logicalcpu'
+	alias n="ninja -j $(sysctl -n hw.logicalcpu)"
+fi
+
+set -o emacs

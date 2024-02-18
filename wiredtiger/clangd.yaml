@@ -1,0 +1,9 @@
+CompileFlags:
+    Add: [-ferror-limit=0, --include=wt_internal.h]
+
+---
+
+If:
+    PathMatch: .*\.h
+CompileFlags:
+    Add: [-Wno-unused-macros]

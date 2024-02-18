@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ife
+# key: ife
+# expand-env: ((yas-indent-line 'auto))
+# --
+if ($0) {
+} else {
+}

@@ -1,0 +1,5 @@
+remove mod1 = Alt_L Alt_R
+keycode 66 = Super_L NoSymbol Super_L
+clear control
+add control = Control_R Control_L Alt_R 
+add mod4 = Super_L

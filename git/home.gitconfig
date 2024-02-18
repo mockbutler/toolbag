@@ -1,0 +1,7 @@
+[user]
+	name = Marc Butler
+	email = mockbutler@gmail.com
+[core]
+	excludesfile = /Users/marc/toolbag/git/home.gitignore
+[alias]
+	st = status
