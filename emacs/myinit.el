@@ -1,3 +1,10 @@
+(defun mib (n)
+  "Integer representing N megabytes."
+  (* n (* 1024 1024)))
+
+(setq gc-cons-threshold (mib 100)
+      read-process-output-max (mib 2))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
@@ -12,9 +19,11 @@
 (setq package-selected-packages '(company
 				  dap-mode
 				  diminish
+				  eglot
 				  elpy
 				  exec-path-from-shell
 				  flycheck
+				  flyspell
 				  git-gutter
 				  git-gutter-fringe
 				  helm-lsp
@@ -40,8 +49,19 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (delete-selection-mode 1)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+
+(setq load-prefer-newer t)
 (setq require-final-newline t)
+(setq scroll-error-top-bottom t)
+(setq use-short-answers t)
+
+(setq ihhibit-splash-screen t)
+(setq inhibit-startup-echo-area-message t)
+(setq inhibit-startup-screen t)
+
+
+(setq backup-by-copying t)
 
 (require 'diminish)
 
@@ -57,12 +77,15 @@
 (which-key-mode)
 (diminish 'which-key-mode)
 
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (require 'dap-cpptools)
-  (yas-global-mode 1))
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
+(require 'dap-cpptools)
+(yas-global-mode 1)
+
+(require 'eglot)
+(add-to-list 'eglot-stay-out-of 'eldoc)
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(define-key eglot-mode-map (kbd "<f6>") 'xref-find-references)
+(define-key eglot-mode-map (kbd "C-c h") 'eldoc)
 
 (require 'company)
 (setq company-minimum-prefix-length 3
@@ -125,3 +148,26 @@
           (lambda ()
             (define-key racket-repl-mode-map (kbd "<f5>") 'racket-run)))
 (setq tab-always-indent 'complete)
+
+(use-package magit
+  :config
+  (add-to-list 'magit-status-sections-hook 'magit-insert-local-branches))
+
+
+(add-to-list 'auto-mode-alist '("\\.gdb\\'" . gdb-script-mode))
+(add-to-list 'auto-mode-alist '("\\.stp\\'" . systemtap-mode))
+
+(use-package flyspell
+  :config
+  (setq ispell-program-name "hunspell"
+        ispell-default-dictionary "en_US")
+  :hook (text-mode . flyspell-mode)
+  :bind (("M-<f7>" . flyspell-buffer)
+         ("<f7>" . flyspell-word)
+         ("C-;" . flyspell-auto-correct-previous-word)))
+
+;; Looks like work.
+(if (and (file-directory-p "~/src/10gen") (file-directory-p "~/src/wiredtiger"))
+    (progn
+      (add-to-list 'load-path "~/toolbag/emacs")
+      (require 'wiredtiger)))
