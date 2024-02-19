@@ -19,6 +19,7 @@
 (setq package-selected-packages '(company
 				  dap-mode
 				  diminish
+				  eglot
 				  elpy
 				  exec-path-from-shell
 				  flycheck
@@ -76,12 +77,15 @@
 (which-key-mode)
 (diminish 'which-key-mode)
 
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  (require 'dap-cpptools)
-  (yas-global-mode 1))
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
+(require 'dap-cpptools)
+(yas-global-mode 1)
+
+(require 'eglot)
+(add-to-list 'eglot-stay-out-of 'eldoc)
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(define-key eglot-mode-map (kbd "<f6>") 'xref-find-references)
+(define-key eglot-mode-map (kbd "C-c h") 'eldoc)
 
 (require 'company)
 (setq company-minimum-prefix-length 3

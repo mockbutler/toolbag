@@ -37,11 +37,11 @@
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (setq fill-column 100
-		  truncate-lines t)
-	    (define-key c-mode-base-map (kbd "C-c g") 'marc/grep-project)))
+		  truncate-lines t)))
+;	    (define-key c-mode-base-map (kbd "C-c g") 'marc/grep-project)))
 
 (require 'tramp)
-(add-to-list 'tramp-remote-path "~/bin")
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 (add-to-list 'tramp-connection-properties
              (list (regexp-quote "/ssh:.*")
                    "remote-shell" "/usr/bin/bash"))
