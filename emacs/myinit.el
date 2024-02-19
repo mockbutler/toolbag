@@ -86,6 +86,7 @@
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (define-key eglot-mode-map (kbd "<f6>") 'xref-find-references)
 (define-key eglot-mode-map (kbd "C-c h") 'eldoc)
+(setq eglot-ignored-server-capabilities '(:inlayHintProvider))
 
 (require 'company)
 (setq company-minimum-prefix-length 3
