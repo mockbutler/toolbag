@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: wtfunc
+# key: wtfunc
+# --
+/*
+ * ${1:func} --
+ *     $2
+ */
+$3
+${1}($0)
+{
+    return ($4);
+}
