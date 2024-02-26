@@ -17,6 +17,7 @@
 ;; https://github.com/emacs-helm/helm
 
 (setq package-selected-packages '(company
+				  cmake-mode
 				  dap-mode
 				  diminish
 				  eglot
@@ -27,6 +28,7 @@
 				  git-gutter
 				  git-gutter-fringe
 				  helm-lsp
+				  helm-projectile
 				  helm-xref
 				  racket-mode
 				  lsp-mode
@@ -43,6 +45,7 @@
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
 
 
 (setq mac-option-modifier 'super)
@@ -74,6 +77,16 @@
 (define-key global-map [remap switch-to-buffer] #'helm-mini)
 (define-key global-map [remap bookmark-jump] #'helm-filtered-bookmarks)
 
+(require 'projectile)
+;; Recommended keymap prefix on macOS
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(projectile-mode +1)
+(require 'helm-projectile)
+(helm-projectile-on)
+(setq projectile-project-search-path '("~/src"))
+(setq projectile-enable-caching t)
+
+
 (which-key-mode)
 (diminish 'which-key-mode)
 
@@ -81,7 +94,8 @@
 (yas-global-mode 1)
 
 (require 'eglot)
-(add-to-list 'eglot-stay-out-of 'eldoc)
+					;(add-to-list 'eglot-stay-out-of 'eldoc)
+(setq eldoc-echo-area-use-multiline-p nil)
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (define-key eglot-mode-map (kbd "<f6>") 'xref-find-references)
@@ -92,11 +106,8 @@
 (setq company-minimum-prefix-length 3
       company-idle-delay 0.2)
 
-(setq projectile-project-search-path '("~/src"))
-
 (setq yas-snippet-dirs
       '("~/.emacs.d/mysnippets" "~/toolbag/emacs/mysnippets"))
-
 
 (elpy-enable)
 (setq elpy-rpc-python-command "python3")
@@ -153,7 +164,6 @@
 (use-package magit
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-local-branches))
-
 
 (add-to-list 'auto-mode-alist '("\\.gdb\\'" . gdb-script-mode))
 (add-to-list 'auto-mode-alist '("\\.stp\\'" . systemtap-mode))
